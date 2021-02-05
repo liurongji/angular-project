@@ -1,0 +1,42 @@
+<nz-card>
+  <div nz-row class="mb-md">
+    <div nz-col nzSpan="12">
+      <form nz-form nzLayout="inline" se-container>
+        <se label="User ID" labelWidth="0">
+          <input nz-input [(ngModel)]="args.userid" name="userid" id="userid" />
+        </se>
+        <se>
+          <button nz-button [nzType]="'primary'" (click)="st.load()" [nzLoading]="http.loading">Search</button>
+          <button nz-button (click)="st.load(1, { _allow_anonymous: true })" [disabled]="http.loading">Clear</button>
+        </se>
+      </form>
+    </div>
+    <div nz-col nzSpan="12">
+      <div class="text-right">
+        <button nz-button nz-dropdown [nzDropdownMenu]="exportMenu">
+          <span>Export</span>
+          <i nz-icon nzType="down"></i>
+        </button>
+        <nz-dropdown-menu #exportMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item>Excel</li>
+            <li nz-menu-item>JSON</li>
+            <li nz-menu-item>PNG</li>
+          </ul>
+        </nz-dropdown-menu>
+        <button nz-button [nzType]="'default'" full-toggle class="ml-sm">Full</button>
+      </div>
+    </div>
+  </div>
+  <st
+    #st
+    [data]="url"
+    [req]="{ params: args }"
+    [res]="{ reName: { list: 'results' } }"
+    [total]="total"
+    [ps]="ps"
+    [columns]="columns"
+    [scroll]="scroll"
+  >
+  </st>
+</nz-card>
